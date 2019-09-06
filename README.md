@@ -1,5 +1,5 @@
 ```
-# vue+vuex+vue-router的使用，几乎涉及到vuex和vue-router的所有知识的应用
+# vue+vuex+vue-router+axios的使用，几乎涉及到vuex和vue-router的所有知识的应用
 
 ```
 

@@ -1,31 +1,44 @@
 <template>
     <div id="app">
-      <navbar></navbar>
-      <router-view></router-view>
+        <navbar></navbar>
+        <router-view></router-view>
         <button @click="displaythis('wangtianyun')">跳转到message/wangtianyun</button>
-        <button @click="login">登录</button>
+        <button @click="isLogin">登录</button>
         <button @click="existLogin">退出登录</button>
+        <button @click="getData">axios请求数据</button>
         <router-view name="other"></router-view>
+        <div v-for="(item,index) in lists" :key="item.id">
+            {{index+1}}: {{ item.name }}
+        </div>
     </div>
 </template>
 
 <script>
+import { comments } from './utils/axios/api'
 import navbar from './components/nav/nav.vue'
-import {mapState,mapGetters,mapMutations} from 'vuex';
+import { mapState, mapGetters, mapMutations } from 'vuex';
 export default {
-  components:{navbar},
+    data() {
+        return {
+            lists: []
+        }
+    },
+    components: { navbar },
     computed: {
-      ...mapState({name1:'name'}),
-      ...mapGetters('moduleA',['moduleGetter'])
+        ...mapState({ name1: 'name' }),
+        ...mapGetters('moduleA', ['moduleGetter'])
     },
     methods: {
-      ...mapMutations('moduleA',['moduleMutation']),
-      ...mapMutations(['isLogin','existLogin']),
-      login(){
-        this.isLogin();
-      },
+        ...mapMutations('moduleA', ['moduleMutation']),
+        ...mapMutations(['isLogin', 'existLogin']),
+        getData() {
+            comments({}).then(data => {
+                console.log(data, '111111111');
+                this.lists = data.data
+            })
+        },
         displaythis(id) {
-            console.log(this,id, 'this');
+            console.log(this, id, 'this');
             //方法一，没有参数，用path加不加斜杠都可以通过
             // this.$router.push('login');
             //方法二
@@ -37,7 +50,7 @@ export default {
             //方法二
             // this.$router.push({path:`message/${id}`})
             //三
-            this.$router.push({name:'messageSub',params:{id}})
+            this.$router.push({ name: 'messageSub', params: { id } })
 
         },
         nameAction() {

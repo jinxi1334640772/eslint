@@ -20,15 +20,16 @@ const routes = [
     },
     { path: '/blog', name: 'blog', component: blog, alias: '/blogg' },
     {
-        path: '/forum', name: 'forum', component: forum, beforeEnter: (to, from, next) => {
-            // 
-            console.log(to, from)
-            // next('/login')
-            // next({path:'login'})
-            // next({path:'/login'})
-            alert('路由内导航守卫，跳转到login')
-            next({ name: 'login' })
-        }
+        path: '/forum', name: 'forum', component: forum
+        // , beforeEnter: (to, from, next) => {
+        //     // 
+        //     console.log(to, from)
+        //     // next('/login')
+        //     // next({path:'login'})
+        //     // next({path:'/login'})
+        //     alert('路由内导航守卫，跳转到login')
+        //     next({ name: 'login' })
+        // }
     },
     { path: '/shoping', name: 'shoping', component: () => import('../components/nav/shoping.vue'), redirect: 'activity' },//异步组件
     { path: '/activity', name: 'activity', component: activity },
