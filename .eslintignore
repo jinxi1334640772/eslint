@@ -1,0 +1,5 @@
+/node_modules/
+/public/
+/root/src/*.js
+build/*
+!build/index.js
