@@ -1,0 +1,48 @@
+/*  
+这种注释会被留下
+ */
+.divstyle {
+  width: 100px;
+  height: 100px;
+  background-color: blue;
+  color: red;
+  color: orange;
+}
+.divstyle h1 {
+  background-color: black;
+}
+.divstyle:after {
+  content: " ";
+  display: block;
+  font-size: 0;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.class1 {
+  width: 100px;
+  height: 100px;
+  background-color: blue;
+}
+.component {
+  width: 300px;
+}
+@media (min-width: 768px) {
+  .component {
+    width: 600px;
+  }
+}
+@media (min-width: 768px) and (min-resolution: 192dpi) {
+  .component {
+    background-image: url(/img/retina2x.png);
+  }
+}
+@media (min-width: 1280px) {
+  .component {
+    width: 800px;
+  }
+}
+.button {
+  color: blue;
+  border: 1px solid green;
+}

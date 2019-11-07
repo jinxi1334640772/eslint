@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Document</title>
+        <style>
+            #imgList {
+                height: 200px;
+                background: red;
+                width: 200px;
+                overflow: auto;
+            }
+            .container {
+                background: yellow;
+                height: 100vh;
+                width: 100vw;
+                overflow: auto;
+                text-align: center;
+            }
+            * {
+                margin: 0;
+                padding: 0%;
+            }
+            body {
+                position: relative;
+            }
+            img {
+                display: block;
+                height: 300px;
+                width: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div id="imgList">
+                <img data-src="/src/assets/logo.png" />
+                <img data-src="/src/assets/logo.png" />
+                <img data-src="/src/assets/logo.png" />
+                <img data-src="/src/assets/logo.png" />
+                <img data-src="/src/assets/logo.png" />
+                <img data-src="/src/assets/logo.png" />
+                <img data-src="/src/assets/logo.png" />
+            </div>
+        </div>
+    </body>
+    <script>
+        // 方法一
+        // const oList = document.getElementById('imgList');
+        // const viewHeight = oList.clientHeight;
+        // const eles = document.querySelectorAll('img[data-src]');
+        // const lazyLoad = () => {
+        //     eles.forEach( item => {
+        //         const rect = item.getBoundingClientRect();
+        //         if (rect.top <= viewHeight && !item.isLoaded) {
+        //             item.isLoaded = true;
+        //             // const oImg = new Image();
+        //             // oImg.onload = () => {
+        //             //     item.src = oImg.src;
+        //             // };
+        //             // oImg.src = item.getAttribute('data-src');
+        //             item.src = item.getAttribute('data-src');
+        //         }
+        //     });
+        // };
+        // // 使用函数节流优化滚动性能
+        // const throttle = (fn, wait = 100) => {
+        //     return function() {
+        //         if (fn.timer) return;
+        //         fn.timer = setTimeout(() => {
+        //             fn();
+        //             fn.timer = null;
+        //         }, wait);
+        //     };
+        // };
+        // lazyLoad();
+        // oList.addEventListener('scroll', throttle(lazyLoad));
+
+        // 方法二（阶级）
+        const eles = document.querySelectorAll('img[data-src]');
+        const observer = new IntersectionObserver(
+            entries => {
+                entries.forEach(entry => {
+                    if (entry.intersectionRatio > 0) {
+                        let oImg = entry.target;
+                        oImg.src = oImg.getAttribute('data-src');
+                        observer.unobserve(oImg);
+                    }
+                });
+            },
+            {
+                root: document.getElementById('imgList'),
+                rootMargin: '0px',
+                threshold: 0.1,
+            },
+        );
+        eles.forEach(item => {
+            observer.observe(item);
+        });
+    </script>
+</html>

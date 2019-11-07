@@ -1,0 +1,62 @@
+//变量：@+变量名的形式，后面跟变量值，定义变量之后，后面就可以直接使用了这个@开头的变量了，会优先在本地查找变量，如果找不到，再从上级寻找，混合和变量都不必再使用前定义，后面定义也是可以的
+@import 'import.less' ;
+@width:100px;  
+@height:50px;
+@color:blue;
+//导入一个文件，里面的变量都可以使用了，如果扩展名是。less，那么可以省略扩展名
+
+ //这种注释不会再编译后的文件中出现
+ /*  
+这种注释会被留下
+ */
+
+.divstyle{
+   .class1();  //混合：将一组属性从一个规则集包含到另一个规则集中的方法，选择器后面加上括号就可以直接在另个选择器中使用。
+   color:@red;
+   h1{
+       background-color: black; //嵌套：在一个选择器中，直接写其子元素的样式，非常方便。
+   }
+   &:after{    //伪选择器与混合一起使用，&代表当前选择器的父级（。divstyle）
+       content: " ";
+       display: block;
+       font-size: 0;
+       height: 0;
+       clear:both;
+       visibility: hidden;
+   };
+   #namespace.class2();  //命名空间和访问符，相当于封装，使用时带上前缀
+}
+.class1{
+    width:@width;
+    height: @height*2;  //算术运算符 +、-、*、/ 可以对任何数字、颜色或变量进行运算。如果可能的话，算术运算符在加、减或比较之前会进行单位换算。计算的结果以最左侧操作数的单位类型为准。如果单位换算无效或失去意义，则忽略单位。无效的单位换算例如：px 到 cm 或 rad 到 % 的转换。
+    background-color: @color;
+}
+//@ 规则（例如 @media 或 @supports）可以与选择器以相同的方式进行嵌套。@ 规则会被放在前面，同一规则集中的其它元素的相对顺序保持不变。这叫做冒泡（bubbling）。
+.component {
+    width: 300px;
+    @media (min-width: 768px) {
+      width: 600px;
+      @media  (min-resolution: 192dpi) {
+        background-image: url(/img/retina2x.png);
+      }
+    }
+    @media (min-width: 1280px) {
+      width: 800px;
+    }
+  }
+
+#namespace() {
+    .class2{
+        color:orange;
+    }
+}
+
+#colors() {
+    primary:blue;
+    secondary:green;
+}
+.button{
+    color:#colors[primary];      //映射：可以将混合和规则集作为一组值的映射使用，这很像对象。
+    border:1px solid #colors[secondary]
+}
+  
